@@ -1,450 +1,865 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>CCESS - DOOM PAYLOAD</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="On this site you can play in DOOM in browser">
-    <meta name="keywords" content="DOOM">
-    <meta name="author" content="caiiiycuk">
+<html lang="de">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>DOM</title>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <style>
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            float: left;
+            overflow: hidden;
+        }
 
-    <!-- Le styles -->
-    <link href="https://js-dos.com/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://js-dos.com/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+        .w1 {
+            perspective: 1000px;
+        }
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="https://js-dos.com/assets/js/html5shiv.js"></script>
-    <![endif]-->
+        .wrapper h1 {
+            text-align: center;
+        }
 
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAABIAAAASABGyWs+AAASgUlEQVR42u2dSW9cy3XH/+dU1b09cBBncRJHUXJs49nJixEkjpEB8C7OLtkGyDYfIB8gnyLLeJdVEAQIAgR+cRaG7Tix8fLyBonNQSRFiRQljt19bw0nC1J8knhbYt9uUnwP9wfu2F236vxvDefUqWqgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoODrhmrjs4TeD8vl6RieYEW8vO/K3yBUzNGILn8jqkyXkm2LS9tGX/4ZJFT9XhT/COGZ8ltoPrR+Fc1l65+Jq/vLP/LrATFxlcyoimaUWeBoQakp4iE0/knkF22U04YAArEPQ8yEsaDGUf1QkaPefRV2KF3xroZk2YYdcgcuWJGvnSAE4ojNgKIxieZVtMh6nvUYoSpkIBCIwLNdDmin7W0IACB95HFk0Ad4ABASGoQakspvsXj0Nkr0XIVNhDVuPLCN1cTu+dAMIl9VMYhIVdmMqHjGVO7HPBN4CnLLoyRgQAARCMSffhpcZ7/p23pEmwI8ddgrof+VAUeA87e9IlJ1dAf696kvpZ79kt9GsuL8KprLqX8Kd+gl3HQxyJDq59KUjha0mSM9yzwq1AcYKxAJZ03GRTsT/BMkT9K2HteeAPbQ2VWvFlr8W846n0BECYahRlH5gMlTz3FJ9siuB7csybJzm+Je+JDciJGKiLjMapjMHY4WlJ5HNKN4iKgEYYGE09EF73yzCX4N7vAqe0AIwdZE/wldynAvKy0Q6gX1SWme5I+omsTygsIWwir5VSRrLnli7ZELIVyTxUEqYtNv4gkdLWieCzwDGg3cT2RECBDgdOBsx5gUKF32QdprRXsCAGg8TEtNg7jNr706UhmhMVHj0B8SOarWjTyNk5pLHrpmzfod+Bfep10Wg4i4TNGoNlMqXlSluxFPCgaDlAM4iJwN6G1a79UHQBpo1my732tbgOSxDfuax4FOTCSAh0CEBD0BvTB3Ef1Q9TRY9tk/RuPTxK8iXffuWfD1nE9ixeoW6zHSMxTf03qOzISiHoERoTQIEFqM5jkgyD7Zx22X1bYAfl/cY4kmqBu1BvDazIEyqBL0JHo/NOTI70t4gsMf25P/TtotVZXU8F9Xze8CtwJVAHX6oCDS2avTCoLfErfftgDc7hdCEtzKlc2cp9bxQICw8BDMB+j5fkRoW29zm6M/Bk0HqgI4K/PqpnwCkocux8jZtgAA0pon19oiDCiA0b7RLiAQj2hRmd62e2o0r9Ej8N0wOr1s1FtaZMmv5Sm77YYBcOsix4S+rKWQpfQ/RVVZTzOGAsoiLGeDTD5DCNQU4kmTft7G/Eag0rc1GZHc4zsBDALgSY4RdsmvCTTMHwAkFz8sx5Su53lYLgGehrAL7s+wKSk0fumPf1o3gzqa0HqWokWOFhSNCXoF+tRxbGcUFoSeEC/po8/bqKHqYb3QpgNOZ38kRJZkn8ITsqtil0Ojltqn3h+Egb8sRz/gjJUSwW379Km7LgGOvV8Xvpv1PyNmnsNHIXmWJs9SfAxi0hUdjaloRkdLzDNQk6ABoTIJXa5zcKB5IVzO+QAARONaT/K7F5WvvObhWGSP/YbYmvg1Sdas3fO+6c9lZOZoUQv5zHLCBoeTPH08jwASJK2F6E/5okUEMNPMioMP5x+2x9Ye25Ma6CfEEfEtjqaUmef4ntIzrEaAikBLq/WJCOJ7Svcre3DZV8zcZfS20OvU6EKwkEOyWz48IvvAN2rW74g/DOc1fwMuE9/OLpMC2Yc5Q155BACQ1jyajOiitaDHSFU5HGY0QyA+Fb8T7I7D/4AVqR5lbqtoVpWWjF4kXgqiwsWv8QTM5GUFIKLSN7UoyQzX0IHyn5OrSeNBmm74dNdJUy5jOzXANNRC1CYlKzlnm5wC2E0fnkc0IW++swIehh5S9vDdxgpewoGzB67+BejfKBoyo39Xxl1cLFPKQc0JPr1ck/qUWSBk2ZSImv8iez8+Dj60G4YqTUbcRxlSMcIecrhgL7+dC78fsM0ZyzIBehBPmnYLFEi6Z+sfp9lLPYXqd2JWl6ptaSbi8ax5hSB1nPw68d7nCAJGUwpR5gAEv4EcLtgpeQVIgluXbP/ISHSnnZ3Olwgk/SyQpcz/qXlw/6U8i9J9japkC7BL6UYeSxGIJ0U4q1cJ2VoINm+8JN/XBOJXQT7DIkJiZpgpT8luFTjI7lg0LGbi3WUqxXqJhDLHH6RfePci12q9rOO5Ft3aIl3OH07KKQCAei2RI2QaS0+SruTpBOlT5zcko1ICrlLlW++OwcZDcbyosgcYT+5z5FurRIOax7IWaQQcsn2UP7qUX4B02/mn2QKEAUd9ecr0zZB+JiTZHSu6z6zfUeHSnMFIyLSUHKH+WXvbVefoYZZenz2sPSW39z56gDvxflPoYoREgD7Ro/lKluRTjzR7GtDzFA29Y9kW3VMhbuErbZHbzhkY4glIfEFVAim4dbiT9yGABGn+zPtPWJ5DLIjpPAZHJZjpnCUnK1Z2s+oVoIZQmSu9rTGGacG3mACI1rQ/zjNWECiaU1ByHpUjJrKEPfafcP3naScbqzn9gFMOfto4/i/mQehxLi1Eep7UFPQIo1+ieQ1Qjgice+5lg2kqw1KhFKJ7Gj9v+V0zpPRCi0CTRf1jK7m2AsgQTwgc4YDCLtym2FWfrgT32LvnwTc62l7oSAARcSceJ0g3fP2XlphUD5thZe4oFRQxcuzweSvpZ6H0e5QV5xBa8Gy41ZpPTzMGWixAD6jxsJmvmcQ4+YmTfxW7Gdye9/XQxdyOjgR400BB3KF3h76x0lEx9U/SUj1C+YIpBXoWZlAlT7MFqHzLUJwVgmOELbI7OUdqn4TDnzS6aKjXq3bzSDe9PMty8gJoGPF89kvDMZtvcNYCCiRI/8+7zsaKK+ImCuD2vVuR7JhEFNRidvc3o4qnsgd5SXDyv8kVbkh2wE0UIPiQ/CZwwq+urE4RQnRfcZRR7dJdw0OvGJkABSgQEe1ov/G+W9WCbs4BXeTwP5r2iTYLSs2LmWU1SlQFlAghWlTRmG5uvOZSEcgsESJBAAmQkhyQ30ay7FxN7Eqab7vqGrihArhjd/Qrh1+BFHGV4gkTzSqzyGaB9CiXZqM3BOAyR1Par4R0xdvl4NeRbni3F0LyFU4NfjekyAxqiihH2kiexxGpMpemotLIm0EhNlyZK5kBReo6anJaGS6R6ucOm97Rt9nw0N+UeRxqI8Ijlay5+mYzPbDedSXZ7MbBmk2/jidMPKdoRmgupL8J+//QfG+ecLDBH4XyjxR+x3EIpYbqfVa167750Nq1kD72dteF+qU2/G4mxKSqbEaVniC9wNGciqYVD0EqAhaAk4/a3ll7g07ngPRhkESDxcP7sscd8Ayqf0iwWo6N2w5uXfwKkhXvn0g4DLbpO8iAvXKISMUcj8TxlDJzClNOzzKPgnpEtIAA8UFeZvDVya502pZOBfCbgpOXSVpfZnkCSnBL9ADMNwmBeppMB5p3tF0Njc/T+kri9oI/DsG9ZzEIxIa4l9QYRzNcumuiWa0nCP0hRF4IX54PCG9+U3aR5t0KPqdTAeyODzvZSVqvpKQLYsiYDeOWP6CqQ+UolhfktsTWgq2FdMPbXeeb1yeGqejKZCmeNWaeccdj3NOgUAWkIHA+4N3ZYwRsqXD0vntAOBHaUli6RD1epqSDgH7QLTHziL7PsCxHpvlR2Pv7k3AtR1+JafCvqpUfKin7oN1Zsp7gy9NelykEJOsquE4r3KknHEKQdcXSZjkvs6AliCjBUIh/m3Vvnl3MPG3uIf62d72pJy9e8iVOc8rJsuv8iFUXQhGNhymSzhbDAWqYS+PtHrvJiR5hNdLZKQECDri+1vaphYt0QYBkw9JBZ/6IAJVgJq+pB5gZRb3U0bvLcFuS7rZ9ICmrpI5J9qzdCB2WJFpk4nrCNVReMqQ7GjoISJada3TB3+yCAK7p05p/Wwe4ROcQiLqDawgkqJjMPL/D/Kd7v2+xjSO73KkLdkpXwtGSrnq0OjMjQJ3Iv4wtq5eZ+Bc+Fk0pVb3y8Hg8Eptpfm0CoLPYNZ3utjumfZZlxWsmO8ZFkJOcxzEu0p1oaLJmw7GivqwjG0LNf2S76vU0x3NGRhyPEvoClQAtApwvAXkQelC1e9C5XUrTGrfOcr9IAEdoEh9r2aF0y6ePnNv06bbzezLwF5V4NjsZS54h9wbnG3RHALcr4TlUpjumoctq92eHAmFmjkj1KzUEM6n0FEfTSt9mNULSE9An0aRqrl2d8QFQPBPhyPsd8o/FbYp95PxTyIvUHnj3SphERcxzITPDBQS3Ib5jF+ylebqBPwpuQ9R8dkabmhNl2FkfQghNuKbHU5zmmrNmXVbxsDHjWk8SHV71ECQHPz3BzyTZc6HxtuQGM2D0Hc50zEjIPmh5jqNduiOAeHErUvpBxpkZCGhCVL9yzzIaE1xIj0J6ZLHalYq8m/r2pZJTomlFg9lhw9CQ+oOcKY4X6dobZ5cFmbUS0JDEE22fGHi/RIuMUlb/YMgL2M2uha26J8CmlwPKXN5IOeg7V2Onq4EVR3d1ywngkYT9myeAfxH4mc5e8rPohWvatuwK5pZSsy3O4wF+DcF2LWjYNQFCQ9TjiDLzmgV6jlXlJqbAZBLd1jScHZ4TS80H3fTYu9cDgm8+cBSyChSoMaiBr4wA5aUYlZCZY4oj8hvdjJl30yjNWkqNbAGoT3Kc3HsvELGaP93yvfg/yFOyu910FbspQH2z6Z9JdpExyotfDQGiPh3f1Zl5BEQIa5TvRHwruilAsm+TDZc51woJzQjxV2AejscijIbsOFugtBbavZTs7XRTAHESHlG2jQU0FbjyFRBA3ZFQddlLoCanK12OmXd5YkxrHi0O+urbFI3f0EzIcwhk7jF0tgtGz5Xd7nLmQJcFsBtejrPdMepBPHPTBeAS69kWYX4CtpXdv9k9wD714UmLHRgtZqEr92hdIWZEqSnK3C4+jcH5tMvR8i4L4E+CW8s+WyGAmWcV3WgB1DTQnz0Ds+N0pTu7YK8V293iRIQ2TXaWioBvQ/df0857Psr3DWXmZhD4WCePurAL/wbd905tzVOzhTt2S/TYzfWH2RDPvWUC4HTnqyBAYyOR55R53wNVUF6Kb+A0QES6qqrfLMfzKnsCILhVpMfdF6D7y5L0hfNbQpMZ/xJI6c9oZKTHPghuLTSfpF3J7MjH6WXG5Ym4cjemhaCXoCYhPdkTAAVOln24gitfuy+AS3yy5srfy2qIgKZD+Q4qVuHI2HXT+DT1y2TXg9157Ya8K4KJuULRuI4WVXxf8byYCUV9QVSQ0xToFtfM0QnnuBf6MlzFwlzsaig7hcwNjQABhANuBTWInu9qsoRDDptIvvDpFyFdcXbXh6Z0y+M/HV7MuKreLcX3lcw6NQn0CpSIQMS/+5Z0guxS43EXEhEvciWeUbLmWmWpfMn55fYsGPA0hPIHKFslBzpsEa3pk1+k+7887rBPENHwn/fGPyQ+vbhUpV++6Zcf/Ah4rN3RlYyWVyJA+sSF3Sg7SyWTs8x1gAWDwsOg74bqfTr6lDtstiqr0h8zvuHE5b8onYVcTfzVnCW5kkVhOBK3LpRvsXMqhhMagxnr1GmIxwyNC1xHp+QpVUmtsyJacyUCiIh+XKKcCpwWAapK7kuHzjGzjL6Q33QEKFF1k25eVeLwVblFJ79uyqqmlIko32XqYkTPdeox6CXAtGn+szxRYjAfaPlMHf1zcrJ9VbelXFV48vCTevK31kypaF6Ze6TukL5NqIp8+Xsh7y6kNBcpk3qbcxpQJdaLl3v7zy+RTkkOKWzBr5J/iGbNNrcTV7/CH3+6KgEkSHM3be4Cvz67org8HZeXDC1AzUCPEfpEdBC0Ph4kMNOs+5V/llMAM6LNtEKr3wbis7vS2bLss38kSc0nn/t03aU71/fzZ9cRoD+/ovjwk7OfRivfjs2s4gXRd8lMMg9AjAjkNTEEod+pIeBZzueWZg31v36F8anRA0kDeEFuHbYWQi0ka2lzNw3pe7hY4rp3SETEHfuj5TqWgX+HKrEZ1tW7JTVH+i6padAAEMvZzfZVqDuEL/I8iEClJYPIQ86MTk3GHifLzj1A44vUbQf7wue+8bZbvOctKt8MfjNtbqb4iFRMekCVZ6PSUoR5x9Oixyie10fI44JyRHoOdMxhG241pA+DXXFuKyTPbbcSm7vCjQtMAiAQaeI+Kk0bgdQ/TnOMDGSo+p0IR5xuO3vkbv5PKBYUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUfG34f/v9ee8qiql3AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTAyLTA5VDIyOjQxOjM1LTA2OjAwjHHo/wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0wMi0wOVQyMjo0MTozNS0wNjowMP0sUEMAAAAASUVORK5CYII=">
+        .wall {
+            position: absolute;
+            /*font-size: 4em;*/
+            /*width: 80em;*/
+            margin: 0em auto;
 
-    <style type="text/css">
-      div.emscripten, .emscripten-status, .emscripten-padding {
-        padding-top: 20px;
-        padding-left: 20px;
-      }
+        }
 
-      .fullscreen {
-        display: none;
-        margin-top: 20px;
-        margin-left: 20px;
-      }
+        .level {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-211.5em, -10em, -730em);
+            margin-top: 220px;
+        }
+        #camera{
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate3d(0em, 0em, 1000px) rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+            -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+            -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+        }
+        .has3d{
+            transform-style: preserve-3d;
+        }
 
-      .emscripten canvas {
-        border: 0;
-        
-      }
-    </style>
-  </head>
-  
-  <body data-spy="scroll" data-target=".bs-docs-sidebar" style="visibility: hidden;text-align:center;">
-    <div class="emscripten-status" >
-<div style="text-align:left;width:830px; margin:0 auto;">
-<pre style="font-size: 1.5vw;color:#67CC00;line-height:1.5vw">
+        .side {
+            position: absolute;
+            /*width: 2em;*/
+            /*height: 0.5em;*/
+            /*background: rgba(215, 186, 180, 0.6);*/
+            border: 1px solid rgba(0, 0, 0, 1);
+            color: white;
+            text-align: center;
+            /*line-height: 2em;*/
+            backface-visibility: hidden;
+            image-rendering: -moz-crisp-edges; /* Firefox */
+            image-rendering: -o-crisp-edges; /* Opera */
+            image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+        }
+        .plane{
+            transform-origin: left;
+        }
 
-            -.`                                                                      `.-            
-            yccess+/:-.`                                                    `.-:/+ccessy           
-            :MMMMMMMMNccess+:-.``                                  `..-:+ccessNMMMMMMMM:            
-             cMMMMMMMMMMMMMMMNNccess/:-.`                 ``.-:+ccessNMMMMMMMMMMMMMMMMm             
-             +MMMMMMMMMMMMMMMMMMMMMMMMNess+              essNMMMMMMMMMMMMMMMMMMMMMMMMM+             
-             `NMMMMMMccessNMMMMMMMMMMMMMMMN`            /MMMMMMMMMMMMMMMNNccessMMMMMMN`             
-              cMMMMMMe  `.--/+ccessNMMMMMMMs            cMMMMMMNNccess+:-.`   cMMMMMMs              
-              .MMMMMMs           `.-/MMMMMMN`          /MMMMMMd:-.`          `NMMMMMM.              
-               cMMMMMM-              yMMMMMMs         `cMMMMMM:              /MMMMMMy               
-               :MMMMMMs              .NMMMMMN`        +MMMMMMd               hMMMMMM-               
-                +ccesNs               sMMMMMMs       `cMMMMMM:              `NNcess/                
-                     `.               .NMMMMMN`      +MMMMMMh               ``                      
-                                       cNNMMMMs     `NMMMMNN-                                       
-                                        `.:/cce`    :ss+/-.`                                        
-                -cce+/-.`                                                  `.-/cess.                
-                 mMMMMMMMcces+/-.`                                `.:/ccesNMMMMMMMs                 
-                 +MMMMMMMMMMMMMMMMNy                            yNMMMMMMMMMMMMMMMM:                 
-                 `NMMMMMMMMMMMMMMMMM.                          .MMMMMMMMMMMMMMMMMs                  
-                  cMMMMMMMeMMMMMMMMMs                          sMMMMMMMNmdMMMMMMM/                  
-                  .MMMMMMM-`.-:/ccess                          cce+/-.`` /MMMMMMN`                  
-                   cMMMMMMs                                              dMMMMMMs                   
-                   :MMMMMMN`                                            :MMMMMMN`                   
-                    mMMMMMM+                                            hMMMMMMs                    
-                    +MMMMMMs                                           -MMMMMMM.                    
-                    `NMMMMMM:                                          yMMMMMMh                     
-                     sMMMMMMs                                         .NMMMMMM:                     
-                     .MMMMMMM-`                                     `-sMMMMMMd                      
-                      hMMMMMMNcces/:-.`                     `.-/+cessNMMMMMMM/                      
-                      :MMMMMMMMMMMMMNcce/                 .ssNMMMMMMMMMMMMMMs`                      
-                       cNMMMMMMMMMMMMMMMs                 yMMMMMMMMMMMMMMNNm+                       
-                       `.-/+ccesNNMMMMMMM:               .NMMMMMMNNcess+:-.`                        
-                               `.-:+ccess.               ccesss+:-.`                                
-                                       `..               ..`                                        
-</pre>
-</div>
-      Starting MS-DOS...<br/>
-      MS-DOS Version 6.22<br/><br/>
-      <p id="error"></p>
-      <p id="status">Downloading data...</p>
-      <p id="progress">Progress...</p>
-    </div>
+        #playershadow{
+            width: 5em;
+            height: 5em;
+            transform: rotateX(90deg) translateZ(70em);
+            background-color: rgba(0, 0, 0, 0.4);
+            position: absolute;
+            border-radius: 50%;
+        }
 
-    <div class="emscripten">
-      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
-    </div>
-    <div class="fullscreen">
-      <a id="fullscreen" href="javascript:void(0);">Fullscreen</a><br/><br/>
-    </div>
-
-    <div class="emscripten-padding">
-      <div style="text-align:left;width:830px; margin:0 auto;">
-<pre style="font-size: 1.5vw;color:#67CC00;line-height:1.5vw">
-
-            -.`                                                                      `.-            
-            yccess+/:-.`                                                    `.-:/+ccessy           
-            :MMMMMMMMNccess+:-.``                                  `..-:+ccessNMMMMMMMM:            
-             cMMMMMMMMMMMMMMMNNccess/:-.`                 ``.-:+ccessNMMMMMMMMMMMMMMMMm             
-             +MMMMMMMMMMMMMMMMMMMMMMMMNess+              essNMMMMMMMMMMMMMMMMMMMMMMMMM+             
-             `NMMMMMMccessNMMMMMMMMMMMMMMMN`            /MMMMMMMMMMMMMMMNNccessMMMMMMN`             
-              cMMMMMMe  `.--/+ccessNMMMMMMMs            cMMMMMMNNccess+:-.`   cMMMMMMs              
-              .MMMMMMs           `.-/MMMMMMN`          /MMMMMMd:-.`          `NMMMMMM.              
-               cMMMMMM-              yMMMMMMs         `cMMMMMM:              /MMMMMMy               
-               :MMMMMMs              .NMMMMMN`        +MMMMMMd               hMMMMMM-               
-                +ccesNs               sMMMMMMs       `cMMMMMM:              `NNcess/                
-                     `.               .NMMMMMN`      +MMMMMMh               ``                      
-                                       cNNMMMMs     `NMMMMNN-                                       
-                                        `.:/cce`    :ss+/-.`                                        
-                -cce+/-.`                                                  `.-/cess.                
-                 mMMMMMMMcces+/-.`                                `.:/ccesNMMMMMMMs                 
-                 +MMMMMMMMMMMMMMMMNy                            yNMMMMMMMMMMMMMMMM:                 
-                 `NMMMMMMMMMMMMMMMMM.                          .MMMMMMMMMMMMMMMMMs                  
-                  cMMMMMMMeMMMMMMMMMs                          sMMMMMMMNmdMMMMMMM/                  
-                  .MMMMMMM-`.-:/ccess                          cce+/-.`` /MMMMMMN`                  
-                   cMMMMMMs                                              dMMMMMMs                   
-                   :MMMMMMN`                                            :MMMMMMN`                   
-                    mMMMMMM+                                            hMMMMMMs                    
-                    +MMMMMMs                                           -MMMMMMM.                    
-                    `NMMMMMM:                                          yMMMMMMh                     
-                     sMMMMMMs                                         .NMMMMMM:                     
-                     .MMMMMMM-`                                     `-sMMMMMMd                      
-                      hMMMMMMNcces/:-.`                     `.-/+cessNMMMMMMM/                      
-                      :MMMMMMMMMMMMMNcce/                 .ssNMMMMMMMMMMMMMMs`                      
-                       cNMMMMMMMMMMMMMMMs                 yMMMMMMMMMMMMMMNNm+                       
-                       `.-/+ccesNNMMMMMMM:               .NMMMMMMNNcess+:-.`                        
-                               `.-:+ccess.               ccesss+:-.`                                
-                                       `..               ..`                                        
-</pre>
-    </div>
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://js-dos.com/assets/js/jquery-1.11.2.min.js"></script>
-    <script src="https://js-dos.com/assets/js/bootstrap.min.js" defer></script>
-
-    <script type='text/javascript'>
-      var statusElement = document.getElementById('status');
-      var progressElement = document.getElementById('progress');
-
-      var Module = {
-        noImageDecoding: true,
-        preRun: [],
-        postRun: [],
-        print: (function() {
-          var element = document.getElementById('output');
-          if (element) element.value = ''; // clear browser cache
-          return function(text) {
-            text = Array.prototype.slice.call(arguments).join(' ');
-            console.log(text);
-            if (element) {
-              element.value += text + "\n";
-              element.scrollTop = element.scrollHeight; // focus on bottom
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+            #mobilecontrols{
+                display: block !important;
+                z-index: 100;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
             }
-          };
-        })(),
-        printErr: function(text) {
-          text = Array.prototype.slice.call(arguments).join(' ');
-          if (0) { // XXX disabled for safety typeof dump == 'function') {
-            dump(text + '\n'); // fast, straight to the real console
-          } else {
-            console.error(text);
-          }
-        },
-        canvas: (function() {
-          var canvas = document.getElementById('canvas');
-
-          // As a default initial behavior, pop up an alert when webgl context is lost. To make your
-          // application robust, you may want to override this behavior before shipping!
-          // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
-          canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
-
-          return canvas;
-        })(),
-        setStatus: function(text) {
-          if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
-          if (text === Module.setStatus.text) return;
-          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
-          var now = Date.now();
-          //if (m && now - Date.now() < 30) return; // if this is a progress update, skip it if too soon
-          if (m) {
-            text = m[1];
-            progressElement.innerHTML = "Progress " + Math.round(parseInt(m[2]) / parseInt(m[4]) * 100) + "%";
-            progressElement.hidden = false;
-          } else {
-            progressElement.hidden = true;
-          }
-          statusElement.innerHTML = text;
-        },
-        totalDependencies: 0,
-        monitorRunDependencies: function(left) {
-          this.totalDependencies = Math.max(this.totalDependencies, left);
-          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-
-          if (left == 0) {
-            $('.emscripten-status').hide();
-            $('.fullscreen').show();
-          }
-        },
-        SDL_numSimultaneouslyQueuedBuffers: 1
-      };
-      Module.setStatus('Downloading...');
-      window.onerror = function(event) {
-        // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
-        Module.setStatus('Exception thrown, see JavaScript console');
-        Module.setStatus = function(text) {
-          if (text) Module.printErr('[post-exception status] ' + text);
-        };
-      };
-
-       $(document).ready(function () {
-         $("#fullscreen").click(function() {
-            Module.requestFullScreen(false, false);
-         });
-
-         setTimeout(function () {
-          $.ajax({
-             url: "https://js-dos.com/dosbox.js",
-             dataType: "script",
-             error: function(jqXHR, textStatus, error) {
-              $('#error').html('Exception thrown, see JavaScript console');
-              console.log(textStatus, error);
-             },
-             xhr: function() {
-               var xhr;
-               Module.setStatus("Downloading script");
-               xhr = $.ajaxSettings.xhr();
-               xhr.addEventListener("progress", function(evt) {
-                 if (evt.lengthComputable) {
-                   Module.setStatus("Downloading script... (" + evt.loaded + "/" + evt.total + ")");
-                 }
-               });
-               return xhr;
-             }
-          });
-         }, 1000);
-      });
-   </script>
-<script type="text/javascript">
-var Module;
-if (typeof Module === 'undefined') Module = eval('(function() { try { return Module || {} } catch(e) { return {} } })()');
-if (!Module.expectedDataFileDownloads) {
-  Module.expectedDataFileDownloads = 0;
-  Module.finishedDataFileDownloads = 0;
-}
-Module.expectedDataFileDownloads++;
-(function() {
-
-    var PACKAGE_PATH;
-    if (typeof window === 'object') {
-      PACKAGE_PATH = "https://js-dos.com/games/";
-    } else {
-      // worker
-      PACKAGE_PATH = "https://js-dos.com/games/";
-    }
-    var PACKAGE_NAME = '/home/caiiiycuk/js/js-dos.com/build/games/doom.exe.data';
-    var REMOTE_PACKAGE_BASE = PACKAGE_PATH+'doom.exe.data';
-    if (typeof Module['locateFilePackage'] === 'function' && !Module['locateFile']) {
-      Module['locateFile'] = Module['locateFilePackage'];
-      Module.printErr('warning: you defined Module.locateFilePackage, that has been renamed to Module.locateFile (using your locateFilePackage for now)');
-    }
-    var REMOTE_PACKAGE_NAME = typeof Module['locateFile'] === 'function' ?
-                              Module['locateFile'](REMOTE_PACKAGE_BASE) :
-                              ((Module['filePackagePrefixURL'] || '') + REMOTE_PACKAGE_BASE);
-    var REMOTE_PACKAGE_SIZE = 13731014;
-    var PACKAGE_UUID = '133e8b91-0165-4224-b0f9-913f537bb216';
-  
-    function fetchRemotePackage(packageName, packageSize, callback, errback) {
-      var xhr = new XMLHttpRequest();
-
-      xhr.open('GET', packageName, true);
-      xhr.responseType = 'arraybuffer';
-      xhr.onprogress = function(event) {
-        var url = packageName;
-        var size = packageSize;
-        if (event.total) size = event.total;
-        if (event.loaded) {
-          if (!xhr.addedTotal) {
-            xhr.addedTotal = true;
-            if (!Module.dataFileDownloads) Module.dataFileDownloads = {};
-            Module.dataFileDownloads[url] = {
-              loaded: event.loaded,
-              total: size
-            };
-          } else {
-            Module.dataFileDownloads[url].loaded = event.loaded;
-          }
-          var total = 0;
-          var loaded = 0;
-          var num = 0;
-          for (var download in Module.dataFileDownloads) {
-          var data = Module.dataFileDownloads[download];
-            total += data.total;
-            loaded += data.loaded;
-            num++;
-          }
-          total = Math.ceil(total * Module.expectedDataFileDownloads/num);
-          if (Module['setStatus']) Module['setStatus']('Downloading data... (' + loaded + '/' + total + ')');
-        } else if (!Module.dataFileDownloads) {
-          if (Module['setStatus']) Module['setStatus']('Downloading data...');
         }
-      };
-      xhr.onload = function(event) {
-        var packageData = xhr.response;
-        callback(packageData);
-      };
-      xhr.send(null);
-    };
-
-    function handleError(error) {
-      console.error('package error:', error);
-    };
-  
-      var fetched = null, fetchedCallback = null;
-      fetchRemotePackage(REMOTE_PACKAGE_NAME, REMOTE_PACKAGE_SIZE, function(data) {
-        if (fetchedCallback) {
-          fetchedCallback(data);
-          fetchedCallback = null;
-        } else {
-          fetched = data;
+        #mobilecontrols{
+            display: none;
+            touch-action: none;
         }
-      }, handleError);
-    
-  function runWithFS() {
+        .triangle.forward{
+            width: 0;
+            height: 0;
+            border-width: 0 100px 80px 100px;
+            border-color: transparent transparent #FFFFFF55 transparent;
+            border-style: solid;
+            filter: drop-shadow(4px 6px 8px #000000);
+        }
+        .triangle.backward{
+            width: 0;
+            height: 0;
+            border-width: 80px 100px 0 100px;
+            border-color: #FFFFFF55 transparent transparent transparent;
+            border-style: solid;
+            filter: drop-shadow(4px 6px 8px #000000);
+        }
+        #titlescreen{
+            position: absolute;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            opacity: 1;
+            -webkit-mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+            mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+            -webkit-mask-size: 2300% 100%;
+            mask-size: 2300% 100%;
+            border: none;
+            color: #fff;
+        }
+        .titlemelt{
+            -webkit-animation: ani 0.7s steps(22) forwards;
+            animation: ani 0.7s steps(22) forwards;
+            opacity: 0;
+        }
+        .titleimg{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            position: sticky;
+            z-index: 666;
+        }
+        body {
+            margin-left: 0;
+            margin-top: -20px;
+        }
 
-function assert(check, msg) {
-  if (!check) throw msg + new Error().stack;
-}
+        .slide__bg {
+            position: absolute;
+            z-index: 99;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%) scale(2);
+            transform: translate(-50%, -50%) scale(2);
+            -webkit-filter: blur(50px);
+            filter: blur(50px);
+            /*opacity: 0;*/
+            -webkit-transition: opacity 1s ease;
+            transition: opacity 1s ease;
+            will-change: opacity;
+        }
+        .titletext{
+            color: white;
+            z-index: 666;
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5em;
+            pointer-events: none;
+            text-align: center;
+        }
+        @-webkit-keyframes ani {
+            from {
+                -webkit-mask-position: 0 0;
+                mask-position: 0 0;
+            }
+            to {
+                -webkit-mask-position: 100% 0;
+                mask-position: 100% 0;
+            }
+        }
+        @keyframes ani {
+            from {
+                -webkit-mask-position: 0 0;
+                mask-position: 0 0;
+            }
+            to {
+                -webkit-mask-position: 100% 0;
+                mask-position: 100% 0;
+            }
+        }
 
-    function DataRequest(start, end, crunched, audio) {
-      this.start = start;
-      this.end = end;
-      this.crunched = crunched;
-      this.audio = audio;
+         #debuginfo {
+             position: fixed;
+             top: 0;
+             right: 0;
+             background-color: lightblue;
+             padding: 10px;
+             z-index: 1000;
+             font-family: Arial, sans-serif;
+             border: 1px solid #ccc;
+         }
+    </style>
+</head>
+<body translate="no">
+<svg class="slider__mask" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 1920 1080" width="0" height="0">
+    <defs>
+        <pattern id="bg1" patternUnits="userSpaceOnUse" width="1920" height="1080" viewBox="0 0 1920 1080">
+            <image xlink:href="ass/dom.png"
+                   width="100%" height="100%"/>
+        </pattern>
+    </defs>
+</svg>
+<div id="wrapper" class="wrapper w1">
+    <div id="titlescreen">
+        <svg class="slide__bg" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1920" height="1080">
+            <rect x="0" y="0" width="1920" height="1080" fill="url(#bg1)"/>
+        </svg>
+        <img src="ass/dom.png" class="titleimg">
+        <code class="titletext">CLICK TO START</code>
+    </div>
+    <div id="camera" class="has3d">
+        <div id="level" class="level has3d">
+            <div id="playershadow"></div>
+        </div>
+    </div>
+    <div id="mobilecontrols">
+        <div class="triangle forward" id="mobileforward"></div>
+        <br>
+        <div class="triangle backward" id="mobilebackward"></div>
+    </div>
+    <canvas id="minimap" width="350" height="300" style="border:1px solid #d3d3d3; display: block; position: absolute; z-index: 1;">
+        Your browser does not support the canvas element.
+    </canvas>
+    <canvas id="minimapplayerlayer" width="350" height="300" style="border:1px solid #d3d3d3; display: block; position: absolute; z-index: 2;">
+        Your browser does not support the canvas element.
+    </canvas>
+    <div id="debuginfo"></div>
+</div>
+<script src="js/Mth.js"></script>
+<script>
+    document.onkeydown = checkKey;
+    document.onkeyup = stopMovement;
+    var forward = false;
+    var backward = false;
+    const player = {
+        camerarot: new position(0,0,0),
+        pos: new position(-211.5, 12.5, 730),
+        shadowcenter: function() {
+            return new position(-this.pos.x-2.5, this.pos.z, -this.pos.y);
+        },
+        bb: function (){
+            return getPlayerBoundingBox({a: this.pos,});
+        },
+    };
+    var minimapadjustval = 70;
+    document.getElementById('mobileforward').ontouchstart = function (e) {
+        forward = true;
     }
-    DataRequest.prototype = {
-      requests: {},
-      open: function(mode, name) {
-        this.name = name;
-        this.requests[name] = this;
-        Module['addRunDependency']('fp ' + this.name);
-      },
-      send: function() {},
-      onload: function() {
-        var byteArray = this.byteArray.subarray(this.start, this.end);
+    document.getElementById('mobileforward').ontouchend = function (e) {
+        forward = false;
+    }
+    document.getElementById('mobilebackward').ontouchstart = function (e) {
+        backward = true;
+    }
+    document.getElementById('mobilebackward').ontouchend = function (e) {
+        backward = false;
+    }
+    var rooms = [];
+    var sectorlist = [];
+    var scalefactor = 0.2;
+    var e1m1 = "";
+    var perspective = (Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)))/2;
 
-          this.finish(byteArray);
+    $( window ).resize(function() {
+        perspective = (Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)))/2;
+        $('.wrapper').width(window.innerWidth).height(window.innerHeight).css('perspective',perspective);
+    });
 
-      },
-      finish: function(byteArray) {
-        var that = this;
-        Module['FS_createPreloadedFile'](this.name, null, byteArray, true, true, function() {
-          Module['removeRunDependency']('fp ' + that.name);
-        }, function() {
-          if (that.audio) {
-            Module['removeRunDependency']('fp ' + that.name); // workaround for chromium bug 124926 (still no audio with this, but at least we don't hang)
-          } else {
-            Module.printErr('Preloading file ' + that.name + ' failed');
-          }
-        }, false, true); // canOwn this data in the filesystem, it is a slide into the heap that will never change
-        this.requests[this.name] = null;
-      },
+    // Dynamisches Objekt
+    const debugdata = {
     };
-      new DataRequest(0, 67, 0, 0).open('GET', '/MODEM.NUM');
-    new DataRequest(67, 2603, 0, 0).open('GET', '/DWANGO.STR');
-    new DataRequest(2603, 6008, 0, 0).open('GET', '/MODEM.STR');
-    new DataRequest(6008, 82906, 0, 0).open('GET', '/DMFAQ66C.TXT');
-    new DataRequest(82906, 87595, 0, 0).open('GET', '/HELPME.TXT');
-    new DataRequest(87595, 108532, 0, 0).open('GET', '/DM.EXE');
-    new DataRequest(108532, 12516824, 0, 0).open('GET', '/DOOM.WAD');
-    new DataRequest(12516824, 12551396, 0, 0).open('GET', '/DMFAQ66D.TXT');
-    new DataRequest(12551396, 12556013, 0, 0).open('GET', '/ORDER.FRM');
-    new DataRequest(12556013, 12576270, 0, 0).open('GET', '/SERSETUP.EXE');
-    new DataRequest(12576270, 12577041, 0, 0).open('GET', '/DEFAULT.CFG');
-    new DataRequest(12577041, 12587664, 0, 0).open('GET', '/DWANGO.DOC');
-    new DataRequest(12587664, 12609653, 0, 0).open('GET', '/README.TXT');
-    new DataRequest(12609653, 12729854, 0, 0).open('GET', '/DMFAQ66A.TXT');
-    new DataRequest(12729854, 13445347, 0, 0).open('GET', '/DOOM.EXE');
-    new DataRequest(13445347, 13585941, 0, 0).open('GET', '/DMFAQ66B.TXT');
-    new DataRequest(13585941, 13603992, 0, 0).open('GET', '/IPXSETUP.EXE');
-    new DataRequest(13603992, 13677630, 0, 0).open('GET', '/DWANGO.EXE');
-    new DataRequest(13677630, 13677885, 0, 0).open('GET', '/DWANGO.SRV');
-    new DataRequest(13677885, 13684282, 0, 0).open('GET', '/DM.DOC');
-    new DataRequest(13684282, 13684349, 0, 0).open('GET', '/MODEM.CFG');
-    new DataRequest(13684349, 13731014, 0, 0).open('GET', '/SETUP.EXE');
 
-    function processPackageData(arrayBuffer) {
-      Module.finishedDataFileDownloads++;
-      assert(arrayBuffer, 'Loading data file failed.');
-      var byteArray = new Uint8Array(arrayBuffer);
-      var curr;
-      
-      // Reuse the bytearray from the XHR as the source for file reads.
-      DataRequest.prototype.byteArray = byteArray;
-          DataRequest.prototype.requests["/MODEM.NUM"].onload();
-          DataRequest.prototype.requests["/DWANGO.STR"].onload();
-          DataRequest.prototype.requests["/MODEM.STR"].onload();
-          DataRequest.prototype.requests["/DMFAQ66C.TXT"].onload();
-          DataRequest.prototype.requests["/HELPME.TXT"].onload();
-          DataRequest.prototype.requests["/DM.EXE"].onload();
-          DataRequest.prototype.requests["/DOOM.WAD"].onload();
-          DataRequest.prototype.requests["/DMFAQ66D.TXT"].onload();
-          DataRequest.prototype.requests["/ORDER.FRM"].onload();
-          DataRequest.prototype.requests["/SERSETUP.EXE"].onload();
-          DataRequest.prototype.requests["/DEFAULT.CFG"].onload();
-          DataRequest.prototype.requests["/DWANGO.DOC"].onload();
-          DataRequest.prototype.requests["/README.TXT"].onload();
-          DataRequest.prototype.requests["/DMFAQ66A.TXT"].onload();
-          DataRequest.prototype.requests["/DOOM.EXE"].onload();
-          DataRequest.prototype.requests["/DMFAQ66B.TXT"].onload();
-          DataRequest.prototype.requests["/IPXSETUP.EXE"].onload();
-          DataRequest.prototype.requests["/DWANGO.EXE"].onload();
-          DataRequest.prototype.requests["/DWANGO.SRV"].onload();
-          DataRequest.prototype.requests["/DM.DOC"].onload();
-          DataRequest.prototype.requests["/MODEM.CFG"].onload();
-          DataRequest.prototype.requests["/SETUP.EXE"].onload();
-          Module['removeRunDependency']('datafile_/home/caiiiycuk/js/js-dos.com/build/games/doom.exe.data');
+    function updateDebugInfo() {
+        // Dynamisches Einfügen der Werte
+        const debuginfo = document.getElementById("debuginfo");
+        debuginfo.innerHTML = `
+            <p>FPS: ${debugdata.fps}</p>
+            <p>Minimap x: ${debugdata.playx}</p>
+            <p>Minimap z: ${debugdata.playz}</p>
+        `;
+    }
 
-    };
-    Module['addRunDependency']('datafile_/home/caiiiycuk/js/js-dos.com/build/games/doom.exe.data');
-  
-    if (!Module.preloadResults) Module.preloadResults = {};
-  
-      Module.preloadResults[PACKAGE_NAME] = {fromCache: false};
-      if (fetched) {
-        processPackageData(fetched);
-        fetched = null;
-      } else {
-        fetchedCallback = processPackageData;
-      }
-    
-  }
-  if (Module['calledRun']) {
-    runWithFS();
-  } else {
-    if (!Module['preRun']) Module['preRun'] = [];
-    Module["preRun"].push(runWithFS); // FS is not initialized yet, wait for it
-  }
+    $(document).ready(function () {
+        $('#titlescreen').on('click touch', function (){
+            $(this).addClass("titlemelt").delay(2000).hide(0);
+        });
+        perspective = (Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)))/2;
 
-})();
+        var element = document.querySelectorAll(".door");
+        $.getJSON('ass/e1m1_hangar.json', function(data) {
+            e1m1 = data;
+            e1m1['linedef'].forEach(function (linedef,key){
+                addPlane(linedef,key);
+                if(linedef['sidefront'] != 65535){
+                    if(Array.isArray(sectorlist[e1m1['sidedef'][linedef['sidefront']]['sector']])){
+                        sectorlist[e1m1['sidedef'][linedef['sidefront']]['sector']].push(key);
+                    }else{
+                        sectorlist[e1m1['sidedef'][linedef['sidefront']]['sector']] = [];
+                        sectorlist[e1m1['sidedef'][linedef['sidefront']]['sector']].push(key);
+                    }
+                }
+                if(linedef['sideback'] != 65535){
+                    if(Array.isArray(sectorlist[e1m1['sidedef'][linedef['sideback']]['sector']])){
+                        sectorlist[e1m1['sidedef'][linedef['sideback']]['sector']].push(key);
+                    }else{
+                        sectorlist[e1m1['sidedef'][linedef['sideback']]['sector']] = [];
+                        sectorlist[e1m1['sidedef'][linedef['sideback']]['sector']].push(key);
+                    }
+                }
+            });
+            e1m1['sector'].forEach(function(sector,key){
+                addFloor(sector,key);
+                addCeiling(sector,key);
+            });
+        });
+    });
+    var speed = 0;
 
-Module['arguments'] = [ '-conf', './dosbox.conf', './DOOM.EXE' ];
+    function slowdown(){
+        var decreaso = .05;
+        if(speed > 0){
+            if(speed > 0 && speed < decreaso){
+                speed = 0;
+            }else {
+                speed -= decreaso;
+            }
+        }else if(speed < 0){
+            if(speed < 0 && speed > -decreaso){
+                speed = 0;
+            }else {
+                speed += decreaso;
+            }
+        }
+    }
+
+    function checkKey(e) {
+        e = e || window.event;
+        if (e.keyCode == '87') {    // W
+            forward = true;
+            //if(speed<2)
+            //    speed += .5;
+        }
+        if (e.keyCode == '83') {   // S
+            backward = true;
+            //if(speed>-2)
+            //    speed -= .5;
+        }
+        //setTransform();
+    }
+
+    function stopMovement(){
+        forward = false;
+        backward = false;
+    }
+
+    function applySpeed(){
+        var xo = Math.sin(player.camerarot.y * (Math.PI/180));
+        var yo = Math.cos(player.camerarot.y * (Math.PI/180));
+        player.pos.x -= xo * speed;
+        player.pos.z -= yo * speed;
+    }
+
+    function position(x, y, z) {
+        this.x = x || 0;
+        this.y = y || 0;
+        this.z = z || 0;
+    }
+    window.addEventListener('touchend', event => {
+        event.preventDefault();
+    });
+
+    var lastpos = new position(0, 0, 0);
+    document.addEventListener("mousemove", function (ev) {
+        if(true){//!forward && !backward) {
+            player.camerarot.x -= (ev.pageY - lastpos.y) / 2;
+            if (player.camerarot.x <= -90) {
+                player.camerarot.x = -90;
+            }
+            if (player.camerarot.x >= 90) {
+                player.camerarot.x = 90;
+            }
+            player.camerarot.y += (ev.pageX - lastpos.x) / 2;
+            while (player.camerarot.y > 360 || player.camerarot.y < -360) {  //wollen ja nicht das sie zu groß wird :)
+                if (player.camerarot.y > 360) {
+                    player.camerarot.y -= 360;
+                } else if (player.camerarot.y < -360) {
+                    player.camerarot.y += 360;
+                }
+            }
+            lastpos.x = ev.pageX;
+            lastpos.y = ev.pageY;
+        }
+    }, false);
+    var camera = document.getElementById('camera');
+    camera.addEventListener('touchmove', function (e){
+        var clkEvt = document.createEvent('MouseEvent');
+        clkEvt.initMouseEvent('mousemove', true, true, window, e.detail,
+            e.touches[0].screenX, e.touches[0].screenY,
+            e.touches[0].clientX, e.touches[0].clientY,
+            false, false, false, false,
+            0, null);
+        camera.dispatchEvent(clkEvt);
+    },false);
+
+    function setTransform() {
+        $("#camera").get(0).style.setProperty("transform", "translate3d(0em, 0em, "+(perspective)+"px) rotateX(" + player.camerarot.x + "deg) rotateY(" + player.camerarot.y + "deg) rotateZ(" + player.camerarot.z + "deg)");  //Improve Quality:  scale3d(20,20,20)
+        $(".level").get(0).style.setProperty("transform", "translate3d(" + player.pos.x + "em, -5em, " + (-player.pos.z) + "em)");
+        $('.wrapper').get(0).style.setProperty("background-position-x", -player.camerarot.y * 15 +"px");
+        $('.wrapper').get(0).style.setProperty("background-size", "100% "+ (150+player.camerarot.x) + "%");
+        if ( $( "#playershadow" ).length ) {
+            $("#playershadow").get(0).style.setProperty("transform", "rotateX(90deg) translate3d(" + player.shadowcenter().x + "em, " + player.shadowcenter().y + "em, " + player.shadowcenter().z + "em)");
+        }
+    }
+
+    function getMinMaxSectorVals(secnr){
+        var min_x = 100000;
+        var min_y = 100000;
+        var max_x = -140000;
+        var max_y = -140000;
+        sectorlist[secnr].forEach(function(linedefnr,key){
+            var v1 = e1m1['vertex'][e1m1['linedef'][parseInt(linedefnr)]['v1']];
+            var v2 = e1m1['vertex'][e1m1['linedef'][parseInt(linedefnr)]['v2']];
+            //Min
+            if(parseFloat(v1['x']) < min_x){
+                min_x = parseFloat(v1['x']);
+            }
+            if(parseFloat(v2['x']) < min_x){
+                min_x = parseFloat(v2['x']);
+            }
+            if(parseFloat(v1['y']) < min_y){
+                min_y = parseFloat(v1['y']);
+            }
+            if(parseFloat(v2['x']) < min_y){
+                min_y = parseFloat(v2['x']);
+            }
+            //Max
+            if(parseFloat(v1['x']) > max_x){
+                max_x = parseFloat(v1['x']);
+            }
+            if(parseFloat(v2['x']) > max_x){
+                max_x = parseFloat(v2['x']);
+            }
+            if(parseFloat(v1['y']) > max_y){
+                max_y = parseFloat(v1['y']);
+            }
+            if(parseFloat(v2['y']) > max_y){
+                max_y = parseFloat(v2['y']);
+            }
+        });
+        return {'min_x':min_x,'max_x':max_x,'min_y':min_y,'max_y':max_y}
+    }
+
+    function ListSectorAngles(secnr){
+        var secminmax = getMinMaxSectorVals(secnr);
+        var xdif = secminmax['max_x'] - secminmax['min_x'];
+        var ydif = secminmax['max_y'] - secminmax['min_y'];
+        var center = {'x':(secminmax['min_x']+xdif-1),'y':(secminmax['min_y']+ydif-1)};
+        var anglist = Array();
+        sectorlist[secnr].forEach(function(linedefnr,key){
+            var v1 = e1m1['vertex'][e1m1['linedef'][linedefnr]['v1']];
+            var v2 = e1m1['vertex'][e1m1['linedef'][linedefnr]['v2']];
+            var rad = Math.atan2((parseFloat(v1['y']) - parseFloat(center['y'])), (parseFloat(v1['x']) - parseFloat(center['x'])));
+            // anglist.splice([e1m1['linedef'][parseInt(linedefnr)]['v1']],0,rad);
+            if (!anglist.hasOwnProperty(e1m1['linedef'][parseInt(linedefnr)]['v1'])) {
+                anglist[e1m1['linedef'][parseInt(linedefnr)]['v1']] = (rad * (180/Math.PI)+360)%360;
+                // anglist[e1m1['linedef'][parseInt(linedefnr)]['v1']] = rad;
+            }
+            rad = Math.atan2((parseFloat(v2['y']) - parseFloat(center['y'])), (parseFloat(v2['x']) - parseFloat(center['x'])));
+            // anglist.splice([e1m1['linedef'][parseInt(linedefnr)]['v2']],0,rad);
+            if (!anglist.hasOwnProperty(e1m1['linedef'][parseInt(linedefnr)]['v2'])) {
+                anglist[e1m1['linedef'][parseInt(linedefnr)]['v2']] = (rad * (180/Math.PI)+360)%360;
+                // anglist[e1m1['linedef'][parseInt(linedefnr)]['v2']] = rad;
+            }
+        });
+        return anglist;
+    }
+
+    function addFloor(sector,secnr){
+        $('#level').append('<div id="sectorfloor'+secnr+'" class="has3d wall"></div>');
+        var secminmax = getMinMaxSectorVals(secnr);
+        var min_x = secminmax['min_x'];
+        var min_y = secminmax['min_y'];
+        var max_x = secminmax['max_x'];
+        var max_y = secminmax['max_y'];
+
+        var xdif = max_x - min_x;
+        var x1perc = xdif / 100;
+        var ydif = max_y - min_y;
+        var y1perc = ydif / 100;
+        var clippath = 'polygon(';
+        //https://en.wikipedia.org/wiki/Curve_orientation#Orientation_of_a_simple_polygon
+        var anglist = ListSectorAngles(secnr);
+        var res = Array();
+
+        //Schleife über sectorlist
+        //
+
+        function findPartner(retarr, vertex){
+            // console.log(sectorlist[secnr])
+            sectorlist[secnr].forEach(function(linedefnr,nombre){
+                var ld = e1m1['linedef'][parseInt(linedefnr)];
+                if(ld['v1'] == vertex){
+                    if(!retarr['verts'].includes(ld['v2'])){
+                        retarr['verts'].push(ld['v2']);
+                        if(!retarr['lds'].includes(linedefnr)){
+                            retarr['lds'].push(linedefnr);
+                        }
+                        retarr = findPartner(retarr,nombre);
+                    }
+                }
+                if(ld['v2'] == vertex){
+                    if(!retarr['verts'].includes(ld['v1'])){
+                        retarr['verts'].push(ld['v1']);
+                        if(!retarr['lds'].includes(linedefnr)){
+                            retarr['lds'].push(linedefnr);
+                        }
+                        retarr = findPartner(retarr,nombre);
+                    }
+                }
+            });
+            return retarr;
+        }
+
+        function findConnectingVertex(usedLDs,vertex){
+            var ldlist = sectorlist[secnr];
+            var result = null;
+            ldlist.forEach(function (val,key){
+                if(!usedLDs.includes(val)){
+                    var ld = e1m1['linedef'][val];
+                    if(ld['v1'] == vertex || ld['v2'] == vertex){
+                        result = val;
+                    }
+                }
+            });
+            return result;
+        }
+
+        var diesersector = sectorlist[secnr];
+        var v1 = e1m1['vertex'][e1m1['linedef'][parseInt(diesersector[0])]['v1']];
+        var v2 = e1m1['vertex'][e1m1['linedef'][parseInt(diesersector[0])]['v2']];
+        clippath += (100-((v1['x']-min_x) / x1perc)) + '% ' + (((v1['y']-min_y) / y1perc)) + '%, ' + (100-((v2['x']-min_x) / x1perc)) + '% ' + (((v2['y']-min_y) / y1perc))+'%';
+        var usedLds = [diesersector[0]];
+        var searchVector = e1m1['linedef'][parseInt(diesersector[0])]['v2'];
+        var nextld = findConnectingVertex(usedLds, searchVector);
+        while (nextld != null) {
+            if(e1m1['linedef'][nextld]['v1'] == searchVector) {
+                var lide = e1m1['vertex'][e1m1['linedef'][parseInt(nextld)]['v2']];
+                clippath += ',' + (100-((lide['x'] - min_x) / x1perc)) + '% ' + (((lide['y'] - min_y) / y1perc)) + '%';
+                searchVector = e1m1['linedef'][parseInt(nextld)]['v2'];
+            }else if(e1m1['linedef'][nextld]['v2'] == searchVector) {
+                var lide = e1m1['vertex'][e1m1['linedef'][parseInt(nextld)]['v1']];
+                clippath += ',' + (100-((lide['x'] - min_x) / x1perc)) + '% ' + (((lide['y'] - min_y) / y1perc)) + '%';
+                searchVector = e1m1['linedef'][parseInt(nextld)]['v1'];
+            }
+            usedLds.push(nextld);
+            nextld = findConnectingVertex(usedLds, searchVector);
+        }
+        clippath += ');';
+
+        var v1 = e1m1['vertex'][e1m1['linedef'][sectorlist[secnr][0]]['v1']];
+        var v2 = e1m1['vertex'][e1m1['linedef'][sectorlist[secnr][0]]['v2']];
+        var rad = Math.atan2((parseFloat(v2['y']) - parseFloat(v1['y'])), (parseFloat(v2['x']) - parseFloat(v1['x'])));
+        var secfloor = sector['heightfloor'];
+        var secceil = sector['heightceiling'];
+        if(sector['texturefloor'] != undefined) {
+            $('#sectorfloor' + secnr).append('<div class="has3d side" style=\'background-image:url("ass/doomtex/' + sector['texturefloor'] + '.png\");background-size:100% 100%; clip-path: '+clippath +
+                ' transform-origin: top; transform: rotateX(90deg) rotateZ(180deg); width: ' + Math.abs((xdif) * scalefactor) + 'em; height:  ' + Math.abs((ydif) * scalefactor) + 'em;\'></div>');
+            $('#sectorfloor' + secnr).css({
+                "transform":
+                    'translateX(' + (min_x * scalefactor) + 'em) translateY(' + -((scalefactor) + (secfloor * scalefactor)) + 'em) translateZ(' + -(min_y * scalefactor) + 'em)',
+                // "clip-path": clippath
+            });
+        }
+        //https://bennettfeely.com/clippy/          translateX(' + (v1['x']*scalefactor) + 'em) translateY('+-((scalefactor)+((secceil-secfloor)* scalefactor)+(secfloor* scalefactor))+'em) translateZ(' + -(v1['y']*scalefactor) + 'em)'
+    }
+
+
+    function addCeiling(sector,secnr){
+        $('#level').append('<div id="sectorceil'+secnr+'" class="has3d wall"></div>');
+        var secminmax = getMinMaxSectorVals(secnr);
+        var min_x = secminmax['min_x'];
+        var min_y = secminmax['min_y'];
+        var max_x = secminmax['max_x'];
+        var max_y = secminmax['max_y'];
+
+        var xdif = max_x - min_x;
+        var x1perc = xdif / 100;
+        var ydif = max_y - min_y;
+        var y1perc = ydif / 100;
+        var clippath = 'polygon(';
+        //https://en.wikipedia.org/wiki/Curve_orientation#Orientation_of_a_simple_polygon
+        var anglist = ListSectorAngles(secnr);
+        var res = Array();
+
+        function findPartner(retarr, vertex){
+            // console.log(sectorlist[secnr])
+            sectorlist[secnr].forEach(function(linedefnr,nombre){
+                var ld = e1m1['linedef'][parseInt(linedefnr)];
+                if(ld['v1'] == vertex){
+                    if(!retarr['verts'].includes(ld['v2'])){
+                        retarr['verts'].push(ld['v2']);
+                        if(!retarr['lds'].includes(linedefnr)){
+                            retarr['lds'].push(linedefnr);
+                        }
+                        retarr = findPartner(retarr,nombre);
+                    }
+                }
+                if(ld['v2'] == vertex){
+                    if(!retarr['verts'].includes(ld['v1'])){
+                        retarr['verts'].push(ld['v1']);
+                        if(!retarr['lds'].includes(linedefnr)){
+                            retarr['lds'].push(linedefnr);
+                        }
+                        retarr = findPartner(retarr,nombre);
+                    }
+                }
+            });
+            return retarr;
+        }
+
+        function findConnectingVertex(usedLDs,vertex){
+            var ldlist = sectorlist[secnr];
+            var result = null;
+            ldlist.forEach(function (val,key){
+                if(!usedLDs.includes(val)){
+                    var ld = e1m1['linedef'][val];
+                    if(ld['v1'] == vertex || ld['v2'] == vertex){
+                        result = val;
+                    }
+                }
+            });
+            return result;
+        }
+
+        var diesersector = sectorlist[secnr];
+        var v1 = e1m1['vertex'][e1m1['linedef'][parseInt(diesersector[0])]['v1']];
+        var v2 = e1m1['vertex'][e1m1['linedef'][parseInt(diesersector[0])]['v2']];
+        clippath += (100-((v1['x']-min_x) / x1perc)) + '% ' + (100-((v1['y']-min_y) / y1perc)) + '%, ' + (100-((v2['x']-min_x) / x1perc)) + '% ' + (100-((v2['y']-min_y) / y1perc))+'%';
+        var usedLds = [diesersector[0]];
+        var searchVector = e1m1['linedef'][parseInt(diesersector[0])]['v2'];
+        var nextld = findConnectingVertex(usedLds, searchVector);
+        while (nextld != null) {
+            if(e1m1['linedef'][nextld]['v1'] == searchVector) {
+                var lide = e1m1['vertex'][e1m1['linedef'][parseInt(nextld)]['v2']];
+                clippath += ',' + (100-((lide['x'] - min_x) / x1perc)) + '% ' + (100-((lide['y'] - min_y) / y1perc)) + '%';
+                searchVector = e1m1['linedef'][parseInt(nextld)]['v2'];
+            }else if(e1m1['linedef'][nextld]['v2'] == searchVector) {
+                var lide = e1m1['vertex'][e1m1['linedef'][parseInt(nextld)]['v1']];
+                clippath += ',' + (100-((lide['x'] - min_x) / x1perc)) + '% ' + (100-((lide['y'] - min_y) / y1perc)) + '%';
+                searchVector = e1m1['linedef'][parseInt(nextld)]['v1'];
+            }
+            usedLds.push(nextld);
+            nextld = findConnectingVertex(usedLds, searchVector);
+        }
+        clippath += ');';
+
+        var v1 = e1m1['vertex'][e1m1['linedef'][sectorlist[secnr][0]]['v1']];
+        var v2 = e1m1['vertex'][e1m1['linedef'][sectorlist[secnr][0]]['v2']];
+        var rad = Math.atan2((parseFloat(v2['y']) - parseFloat(v1['y'])), (parseFloat(v2['x']) - parseFloat(v1['x'])));
+        var secfloor = sector['heightfloor'];
+        var secceil = sector['heightceiling'];
+        if(sector['textureceiling'] != undefined) {
+            if(sector['textureceiling'].indexOf('F_SKY')===0){
+                $('.wrapper').width(window.innerWidth).height(window.innerHeight).css({
+                    'perspective':perspective,
+                    'background-image': 'url("ass/doomtex/'+sector['textureceiling'].replace('F_','')+'.png")',
+                    'background-size': '100% 100%'
+                });
+            }else {
+                $('#sectorceil' + secnr).append('<div class="has3d side" style=\'background-image:url("ass/doomtex/' + sector['textureceiling'] + '.png\");background-size:100% 100%; clip-path: ' + clippath +
+                    ' transform-origin: top; transform: rotateX(-90deg) rotateZ(180deg) translateY(' + (-((ydif) * scalefactor) + "em") + '); width: ' + Math.abs((xdif) * scalefactor) + 'em; height:  ' + Math.abs((ydif) * scalefactor) + 'em;\'></div>');
+                $('#sectorceil' + secnr).css({
+                    "transform":
+                        'translateX(' + (min_x * scalefactor) + 'em) translateY(' + -((scalefactor) + (secceil * scalefactor)) + 'em) translateZ(' + -(min_y * scalefactor) + 'em)',
+                    // "clip-path": clippath
+                });
+            }
+        }
+        //https://bennettfeely.com/clippy/          translateX(' + (v1['x']*scalefactor) + 'em) translateY('+-((scalefactor)+((secceil-secfloor)* scalefactor)+(secfloor* scalefactor))+'em) translateZ(' + -(v1['y']*scalefactor) + 'em)'
+    }
+
+    function addPlane(linedef,linedefnumber){
+        $('#level').append('<div id="linedef'+linedefnumber+'" class="has3d wall">'+linedef["blocking"]+'</div>');
+        //sector['edges'].forEach(function (edge) {
+        var sidedef = e1m1['sidedef'][linedef['sidefront']]['sector'];
+        var sidedefb = 0;
+        if(linedef['sideback'] != 65535) {
+            sidedefb = e1m1['sidedef'][linedef['sideback']]['sector'];
+        }
+            var canvas = document.getElementById("minimap");
+            var ctx = canvas.getContext("2d");//e1m1['linedef']
+            var v1 = e1m1['vertex'][linedef['v1']];
+            var v2 = e1m1['vertex'][linedef['v2']];
+            // console.log(sidedef)
+        //if(sidedef == 7 || sidedefb == 7) {
+            ctx.moveTo((v1['x'] * 0.07) + minimapadjustval, -(v1['y'] * 0.07)-minimapadjustval);
+            ctx.lineTo((v2['x'] * 0.07) + minimapadjustval, -(v2['y'] * 0.07)-minimapadjustval);
+        //     ctx.moveTo((v1['x'] * 0.07), -(v1['y'] * 0.07));
+        //     ctx.lineTo((v2['x'] * 0.07), -(v2['y'] * 0.07));
+            ctx.stroke();   //Minimap Ende
+        //}
+            var distance = Math.sqrt(Math.pow((v2['x'] - v1['x']), 2) + Math.pow((v2['y'] - v1['y']), 2));
+            distance = distance * scalefactor;
+            var rad = Math.atan2((v2['y'] - v1['y']), (v2['x'] - v1['x']));
+            // if(isNaN(sector['floor_height']*scalefactor) || isNaN(rad) || isNaN(distance) || isNaN(edge['y0']*scalefactor) || isNaN(edge['x0']*scalefactor)){
+            //     console.log(linedefnumber);
+            // }
+            // if(edge['tex']['l']['n']=="" || edge['tex']['l']['n']=="-"){
+            //     console.log("nope"+linedefnumber);
+            // }
+            // if(edge['dest']!=0){
+            //     console.log(edge['dest']);
+            // }
+
+        // $('#linedef' + linedefnumber).append('<div class="has3d plane side" style="width: ' + distance + 'em; height: '+((secceil-secfloor)* scalefactor)+'em; transform: translateX(' + (v1['x']*scalefactor) + 'em) translateY('+-((scalefactor)+secfloor)+'em) translateZ(' + (v1['y']*scalefactor) + 'em) rotateY(' + -rad + 'rad)"></div>');
+
+        // $('#linedef' + linedefnumber).append('<div class="has3d plane side" style="width: ' + distance + 'em; height: 20em; transform: translateX(' + (v1['x']*scalefactor) + 'em) translateY('+-((scalefactor)+0)+'em) translateZ(' + (v1['y']*scalefactor) + 'em) rotateY(' + -rad + 'rad)"></div>');
+
+        function findVectorBro(v1,v2){
+            var result = null;
+            e1m1['linedef'].forEach(function(value,key){
+                if(((value['v1'] == v1 && value['v2'] == v2) || (value['v1'] == v2 && value['v2'] == v1))){
+                    result = key;
+                }
+            });
+            return result;
+        }
+
+        function findNeighbouringSector(v1,v2){
+            var vec1 = new PointF(e1m1['vertex'][v1]['x'],e1m1['vertex'][v1]['y']);
+            var vec2 = new PointF(e1m1['vertex'][v2]['x'],e1m1['vertex'][v2]['y']);
+            var result = null;
+            var frontsector = e1m1['sidedef'][linedef['sidefront']]['sector'];
+            e1m1['linedef'].forEach(function(value,key){
+                if(frontsector != e1m1['sidedef'][value['sidefront']]['sector']){
+                    var searchvec1 = new PointF(e1m1['vertex'][value['v1']]['x'],e1m1['vertex'][value['v1']]['y']);
+                    var searchvec2 = new PointF(e1m1['vertex'][value['v2']]['x'],e1m1['vertex'][value['v2']]['y']);
+                    /* if(e1m1['vertex'][value['v1']]['x'] == 320.0 && e1m1['vertex'][value['v1']]['y'] == -3136.0 && e1m1['vertex'][value['v2']]['x'] == 320.0 && e1m1['vertex'][value['v2']]['y'] == -3072.0){  //LD138 der Balken im Nebenraum ohne Textur oben unten
+                        console.log(searchvec1, searchvec2);
+                    } */
+                    if(MyMathOP.Punkt_auf_Linie(searchvec1,vec1,vec2) || MyMathOP.Punkt_auf_Linie(searchvec2,vec1,vec2) || MyMathOP.Punkt_auf_Linie(vec1,searchvec1,searchvec2) || MyMathOP.Punkt_auf_Linie(vec2,searchvec1,searchvec2)){
+                        result = e1m1['sidedef'][value['sidefront']]['sector'];
+                    }
+                }
+            });
+            return result;
+        }
+
+        if(linedef['sidefront'] != 65535){  // 65535 = no sidedef;
+            var sidedef = e1m1['sidedef'][linedef['sidefront']];
+            var sector = e1m1['sector'][sidedef['sector']];
+            var secfloor = sector['heightfloor'];
+            var secceil = sector['heightceiling'];
+            var texture = "";
+            if(sidedef['texturemiddle'] != undefined){
+                texture = 'background-image:url("ass/doomtex/'+sidedef['texturemiddle']+'.png\");';
+            }
+            $('#linedef' + linedefnumber).append('<div class="has3d plane side" id="ldcont'+linedefnumber+'" style=\''+texture+'background-size:100% 100%;' +
+                'width: ' + distance + 'em; height: '+((secceil-secfloor)* scalefactor)+'em; transform: rotateY(' + rad + 'rad)\'></div>');
+            $('#linedef' + linedefnumber).css('transform', 'translateX(' + (v1['x']*scalefactor) + 'em) translateY('+-((scalefactor)+((secceil-secfloor)* scalefactor)+(secfloor* scalefactor))+'em) translateZ(' + -(v1['y']*scalefactor) + 'em)');
+            if(sidedef['texturetop'] != undefined){
+                var neighborsector = findNeighbouringSector(linedef['v1'],linedef['v2']);
+                if(neighborsector != null) {
+                    texture = 'background-image:url("ass/doomtex/' + sidedef['texturetop'] + '.png\");';
+                    var topdiv = '<div id="ldtop' + linedefnumber + '" class="has3d wall" style=\'' + texture + 'background-size:100% 100%;' +
+                        'width: 100%; height: ' + ((secceil - (e1m1['sector'][neighborsector]['heightceiling'])) * scalefactor) + 'em;\'></div>';
+                    $('#ldcont' + linedefnumber).append(topdiv);
+                }else{
+                    console.log(linedefnumber + " keinen Nachbar gefunden [top]");
+                }
+            }
+            if(sidedef['texturebottom'] != undefined){
+                var neighborsector = findNeighbouringSector(linedef['v1'],linedef['v2']);
+                if(neighborsector != null) {
+                    texture = 'background-image:url("ass/doomtex/' + sidedef['texturebottom'] + '.png\");';
+                    var topdiv = '<div id="ldbottom' + linedefnumber + '" class="has3d wall" style=\'' + texture + 'background-size:100% 100%;' +
+                        'width: 100%; height: ' + (((e1m1['sector'][neighborsector]['heightfloor'])-secfloor) * scalefactor) + 'em;bottom:0em;\'></div>';
+                    $('#ldcont' + linedefnumber).append(topdiv);
+                }else{
+                    console.log(linedefnumber + " keinen Nachbar gefunden [bottom]");
+                    console.log("V1",e1m1['vertex'][linedef['v1']]['x'],e1m1['vertex'][linedef['v1']]['y'],"V2",e1m1['vertex'][linedef['v2']]['x'],e1m1['vertex'][linedef['v2']]['y']);
+                }
+            }
+        }
+        // if(linedef['sideback'] != 65535){  // 65535 = no sidedef;
+        //     var rad2 = Math.atan2((v1['y'] - v2['y']), (v1['x'] - v2['x']));
+        //     var sidedef = e1m1['sidedef'][linedef['sideback']];
+        //     var sector = e1m1['sector'][sidedef['sector']];
+        //     var secfloor = sector['heightfloor'];
+        //     var secceil = sector['heightceiling'];
+        //     $('#linedef' + linedefnumber).append('<div class="has3d plane side" style=\'background-image:url("ass/doomtex/'+sidedef['texturemiddle']+'.png\");background-size:100% 100%;' +
+        //         'width: ' + distance + 'em; height: '+((secceil-secfloor)* scalefactor)+'em; transform: rotateY(' + rad2 + 'rad)\'></div>');
+        //     $('#linedef' + linedefnumber).css('transform', 'translateX(' + (v2['x']*scalefactor) + 'em) translateY('+-((scalefactor)+((secceil-secfloor)* scalefactor)+(secfloor* scalefactor))+'em) translateZ(' + -(v2['y']*scalefactor) + 'em)');
+        //
+        // }
+        // $('#linedef' + linedefnumber).append('<div class="has3d plane side" style="width: ' + distance + 'em; height: 20em; transform: translateX(' + (v1['x']*scalefactor) + 'em) translateY('+-((scalefactor)+20)+'em) translateZ(' + (v1['y']*scalefactor) + 'em) rotateY(' + -rad + 'rad)"></div>');
+        // });
+    }
+
+    function drawPlayerPositionOnMap(){
+        var canvas = document.getElementById("minimapplayerlayer");
+        var ctx = canvas.getContext("2d");
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.beginPath();
+        var mmscaleFactor = 0.07; // Verwenden Sie denselben Skalierungsfaktor für beide Canvas
+        var playx = (-player.pos.x * 5 * mmscaleFactor)+minimapadjustval;   //5 um das 0.2 scalefaktor umzukehren und die richtigen Ursprungscoords für die Berechnung zu verwenden
+        var playz = (player.pos.z * 5 * mmscaleFactor)-minimapadjustval;
+        debugdata.playx = playx;
+        debugdata.playz = playz;
+        ctx.arc(playx, playz, 2, 0, 2 * Math.PI, false);
+        // ctx.fillRect(50, 50, 10, 10); // Ein kleines Quadrat an einer festen Position
+
+        console.log("X: "+playx+"; Y: " + playz);
+        ctx.fillStyle = 'green';
+        ctx.fill();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#00FF00';
+        ctx.stroke();
+    }
+
+    var lastTime = 0; // Zeitstempel des letzten Frames
+    var fps = 0; // Aktuelle FPS
+
+    (function gameloop() {
+        // Zeitdifferenz zwischen diesem und dem letzten Frame berechnen
+        var currentTime = Date.now();
+        const deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        // FPS berechnen: 1 Sekunde (1000 ms) geteilt durch Delta-Time
+        fps = 1000 / deltaTime;
+        debugdata.fps = fps.toFixed(2);
+
+        if (forward){
+            if(speed<1)
+                speed += .1;
+            //player.camerarot.x = 0;
+        }
+        if (backward){
+            if(speed>-1)
+                speed -= .1;
+            //player.camerarot.x = 0;
+        }
+        updateDebugInfo();
+        slowdown();
+        applySpeed();
+        setTransform();
+        window.requestAnimationFrame(drawPlayerPositionOnMap);
+        setTimeout( gameloop, 15);
+    })();
 </script>
-   <!-- <script async type="text/javascript" src="https://js-dos.com/dosbox.js"></script> -->
+
+
 </body>
 </html>
