@@ -13,7 +13,7 @@ templatetopnav.innerHTML = `
     <a href="/more/blank.html" class="gr last">about:blank</a>
   </div>
 </div>
-<a href="/about.html">+🎮More games!</a>
+<a href="/moregames.html">+🎮More games!</a>
 <a href="/leaderboard.html">🏆LEADERBOARD</a>
 <a href="/index.html">🎮G4M3S</a>
 <div class="centered-fixed-blur"></div>
