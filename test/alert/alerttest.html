@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Enviar Alerta</title>
+</head>
+<body>
+  <h1>Enviar Alerta para Todos</h1>
+  <input type="text" id="input" placeholder="Digite a mensagem urgente" />
+  <button onclick="sendMessage()">Enviar</button>
+
+  <script>
+    const socket = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host);
+
+    function sendMessage() {
+      const text = document.getElementById('input').value.trim();
+      if (text) {
+        socket.send(text);
+        alert("Mensagem enviada!");
+      }
+    }
+  </script>
+</body>
+</html>
