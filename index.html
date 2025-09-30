@@ -176,5 +176,12 @@
         ></iframe>
       </div>
     </div>
+    <script>
+  const socket = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host);
+
+  socket.onmessage = function(event) {
+    alert("🚨 Aviso Importante:\n\n" + event.data);
+  };
+    </script>
   </body>
 </html>
