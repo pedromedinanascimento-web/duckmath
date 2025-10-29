@@ -25,9 +25,9 @@
 
     /* Container do chat */
     #tlkio {
-        width: 95%;
-        max-width: 950px;
-        height: 400px;      /* altura menor */
+        width: 100%;           /* ocupa toda largura possível */
+        max-width: 1200px;     /* largura maior */
+        height: 350px;         /* menor altura */
         border: 2px solid #444;
         border-radius: 10px;
         overflow: hidden;
@@ -35,7 +35,7 @@
         position: relative;
     }
 
-    /* Ajusta o iframe interno do TLK.io */
+    /* Força o iframe interno do TLK.io a obedecer tamanho */
     #tlkio iframe {
         width: 100% !important;
         height: 100% !important;
