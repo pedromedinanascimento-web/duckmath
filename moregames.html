@@ -23,15 +23,23 @@
         text-align: center;
     }
 
+    /* Container do chat */
     #tlkio {
-        width: 95%;       /* mais largo */
-        max-width: 900px; /* aumenta o limite */
-        height: 50vh;     /* altura menor */
-        min-height: 250px; 
+        width: 95%;
+        max-width: 950px;
+        height: 400px;      /* altura menor */
         border: 2px solid #444;
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        position: relative;
+    }
+
+    /* Ajusta o iframe interno do TLK.io */
+    #tlkio iframe {
+        width: 100% !important;
+        height: 100% !important;
+        border: none;
     }
 </style>
 </head>
