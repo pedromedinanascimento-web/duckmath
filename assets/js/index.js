@@ -8,7 +8,7 @@ templatetopnav.innerHTML = `
     <a href="/more/Unbl0ck3rs.html" class="first">Unbl0ck3rs</a>
     <!--<a href="/more/Virtual_Machines.html" class="vm">Virtual Machines</a>-->
     <a href="/more/chat.html" class="dis">D1sc0rd</a>
-    <a href="/more/moregames.html" class="dis">Superflix</a>
+    <a href="/more/superflixs.html" class="dis">Superflix</a>
     <a href="/more/G4m3-help.html" class="vm">G4m3 Help</a>
     <a href="/more/takedown.html" class="vm">DMCA</a>
     <a href="/more/blank.html" class="gr last">about:blank</a>
