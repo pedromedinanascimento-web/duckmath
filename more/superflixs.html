@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Player</title>
+    <title>Filmes e séries</title>
 
     <!--* CSS -->
     <link rel="stylesheet" href="/assets/css/text_styles.css" />
@@ -29,19 +29,59 @@
       defer=""
     ></script>
     <link rel="stylesheet" href="/assets/css/leaderboard.css" />
+
+    <style>
+      /* Espaço pra topnav fixa — ajuste se sua topnav tiver outra altura */
+      :root { --topnav-height: 70px; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: url('https://pedromatematica.vercel.app/assets/img/bg.svg') no-repeat center center / cover;
+        background-attachment: fixed;
+        padding-top: var(--topnav-height);
+        box-sizing: border-box;
+      }
+
+      /* NÃO centralizar verticalmente — deixa o conteúdo começar abaixo da topnav */
+      main {
+        display: flex;
+        justify-content: flex-start; /* foi center antes */
+        align-items: center;
+        flex-direction: column;
+        min-height: calc(100vh - var(--topnav-height));
+        padding-top: 12px; /* espaço extra */
+        box-sizing: border-box;
+      }
+
+      iframe {
+        width: 90%;
+        aspect-ratio: 16/9;
+        height: auto;
+        max-width: 1200px;
+        border: 0;
+        border-radius: 16px;
+      }
+
+      /* fallback para navegadores que não suportam aspect-ratio */
+      @supports not (aspect-ratio: 16/9) {
+        iframe { height: 560px; } /* ajuste se quiser */
+      }
+    </style>
   </head>
 
-  <body style="margin:0; height:100vh; background:url('https://pedromatematica.vercel.app/assets/img/bg.svg') no-repeat center center / cover;">
+  <body>
+    <!-- topnav -->
     <div id="topnav"></div>
 
-    <main style="display:flex;justify-content:center;align-items:center;flex-direction:column;height:100%;">
+    <!-- conteúdo -->
+    <main>
       <iframe
         src="https://superflixapi.asia/inicio"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen
         frameborder="0"
         scrolling="no"
-        style="width:90%;aspect-ratio:16/9;height:auto;max-width:1200px;border:0;border-radius:16px;"
       ></iframe>
     </main>
   </body>
