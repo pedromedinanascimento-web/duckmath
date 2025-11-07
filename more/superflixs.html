@@ -29,19 +29,47 @@
       defer=""
     ></script>
     <link rel="stylesheet" href="/assets/css/leaderboard.css" />
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        background: url('https://pedromatematica.vercel.app/assets/img/bg.svg') no-repeat center center / cover;
+        background-attachment: fixed;
+        padding-top: 70px; /* 👈 espaço pra topnav */
+      }
+
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      iframe {
+        width: 90%;
+        aspect-ratio: 16/9;
+        height: auto;
+        max-width: 1200px;
+        border: 0;
+        border-radius: 16px;
+      }
+    </style>
   </head>
 
-  <body style="margin:0; height:100vh; background:url('https://pedromatematica.vercel.app/assets/img/bg.svg') no-repeat center center / cover;">
+  <body>
+    <!-- topnav -->
     <div id="topnav"></div>
 
-    <main style="display:flex;justify-content:center;align-items:center;flex-direction:column;height:100%;">
+    <!-- conteúdo -->
+    <main>
       <iframe
         src="https://superflixapi.asia/inicio"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen
         frameborder="0"
         scrolling="no"
-        style="width:90%;aspect-ratio:16/9;height:auto;max-width:1200px;border:0;border-radius:16px;"
       ></iframe>
     </main>
   </body>
