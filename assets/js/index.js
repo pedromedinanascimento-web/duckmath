@@ -9,11 +9,11 @@ templatetopnav.innerHTML = `
     <!--<a href="/more/Virtual_Machines.html" class="vm">Virtual Machines</a>-->
     <a href="/more/superflixs.html" class="dis">Superflix</a>
     <a href="/more/G4m3-help.html" class="vm">G4m3 Help</a>
-    <a href="/more/takedown.html" class="vm">DMCA</a>
+    <a href="/moregames.html" class="vm">More g4m3s</a>
     <a href="/more/blank.html" class="gr last">about:blank</a>
   </div>
 </div>
-<a href="/moregames.html">+💬Chat!</a>
+<a href="/chat.html">+💬Chat!</a>
 <a href="/leaderboard.html">🏆LEADERBOARD</a>
 <a href="/index.html">🎮G4M3S</a>
 <div class="centered-fixed-blur"></div>
