@@ -15,7 +15,7 @@ templatetopnav.innerHTML = `
 </div>
 <a href="/chat.html">+💬Chat!</a>
 <a href="/leaderboard.html">🏆LEADERBOARD</a>
-<a href="/index.html">🎮G4M3S</a>
+<a href="/usando.html">🎮G4M3S</a>
 <div class="centered-fixed-blur"></div>
 <div class="centered-fixed">
      <img src="/assets/img/scaled_goose_pixel.png" onmouseover="spin(this)"
